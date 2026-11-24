@@ -29,6 +29,19 @@ To install on Windows you must be using WSL. Terminals with kitty graphics suppo
 curl -fsSL https://terminal-browser.sh/install | bash
 ```
 
+### From source with [Flox](https://flox.dev) (macOS on Apple Silicon)
+The Flox environment in this repo provides Node, pnpm and Rust. On macOS you also need the Xcode Command Line Tools (`xcode-select --install`) for `swiftc` and `strip`.
+
+```bash
+flox activate                                              # first run also runs pnpm install
+pnpm --filter @zenbu-labs/pixel build
+pnpm --filter @zenbu-labs/pixel build:native -- --release
+pnpm build:dist                                            # builds dist-release/terminal-browser-darwin-arm64.tar.gz
+pnpm install:dist                                          # installs it to ~/.local/bin/terminal-browser
+```
+
+Local builds are signed ad-hoc. `terminal-browser upgrade` replaces a local build with the latest release.
+
 ### Claude code plugin
 [Install instructions here](/claude-code-plugin/README.md)
 
