@@ -26,7 +26,9 @@ if [ -z "${MACOS_SIGN_P12:-}" ]; then
   for binary in "${LOOSE_BINARIES[@]}"; do
     codesign --force --sign - --timestamp=none "$binary"
   done
-  codesign --force --sign - --timestamp=none "$APP"
+  # writing fuses modifies Electron Framework, so nested code must be re-signed too
+  codesign --force --deep --sign - --timestamp=none "$APP"
+  codesign --verify --deep --strict "$APP"
   echo "signed ad-hoc (MACOS_SIGN_P12 not set)"
   exit 0
 fi
